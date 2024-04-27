@@ -5,7 +5,6 @@ import 'package:alumnest/src/auth/screens/login_screen.dart';
 import 'package:alumnest/src/home/screens/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:dynamic_color/dynamic_color.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +34,7 @@ void main() async {
   );
 }
 
-Color brandColor = const Color(0x00F1F6F9);
+// Color brandColor = const Color(0x00F1F6F9);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

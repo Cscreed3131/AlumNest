@@ -62,19 +62,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     )
                   ],
                 ),
-                // const SizedBox(
-                //   width: 10,
-                // ),
               ],
             ),
             actions: const [
               ProfileDialogBox(),
             ],
           ),
-          ref.watch(userDataProvider).when(
-            data: (data) {
-              return SliverToBoxAdapter(
-                child: Column(
+          SliverToBoxAdapter(
+            child: ref.watch(userDataProvider).when(
+              data: (data) {
+                return Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -99,6 +96,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               Theme.of(context).colorScheme.secondaryContainer,
                           label: Text(
                             data.userBranch,
+                            // 'CSE',
                             style: const TextStyle(
                               fontFamily: 'IBMPlexMono',
                               fontSize: 16,
@@ -110,8 +108,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
 
                     AlumniCard(
-                        selectedDepartment: data.userBranch,
-                        selectedYear: 2024),
+                      selectedDepartment: data.userBranch,
+                      selectedYear: 2024,
+                    ),
 
                     const SizedBox(
                       height: 20,
@@ -234,19 +233,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       height: 50,
                     ),
                   ],
-                ),
-              );
-            },
-            error: (error, stackTrace) {
-              return const Center(
-                child: Text('Oops some error'),
-              );
-            },
-            loading: () {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            },
+                );
+              },
+              error: (error, stackTrace) {
+                return const Center(
+                  child: Text('Oops some error'),
+                );
+              },
+              loading: () {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              },
+            ),
           ),
         ],
       ),

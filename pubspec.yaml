@@ -43,9 +43,7 @@ dependencies:
   dotted_line: ^3.2.2
   cached_network_image: ^3.3.1
   animate_do: ^3.0.2
-  dynamic_color: ^1.7.0
-  # google_fonts: ^6.2.0
-  # firebase_database: ^10.4.0
+
 
 dev_dependencies:
   flutter_test:

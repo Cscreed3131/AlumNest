@@ -87,11 +87,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void navTOHomeScreen() {
-      Navigator.of(context).pushReplacementNamed(
-        '/',
-      );
-    }
+    // void navTOHomeScreen() {
+    //   Navigator.of(context).pushReplacementNamed(
+    //     '/',
+    //   );
+    // }
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;

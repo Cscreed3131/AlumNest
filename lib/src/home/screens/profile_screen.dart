@@ -1,8 +1,6 @@
 import 'package:alumnest/global_variables.dart';
-import 'package:alumnest/providers/alumni_data_provider.dart';
 import 'package:alumnest/providers/user_data_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -29,7 +27,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
     final collectionReference =
         FirebaseFirestore.instance.collection('alumnis');
-    collectionReference.doc().set({
+    collectionReference.doc(userSic).set({
       'name': userName,
       'sic': userSic,
       'branch': userBranch,

@@ -1,8 +1,10 @@
 import 'package:alumnest/global_variables.dart';
+import 'package:alumnest/providers/alumni_data_provider.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AlumniCard extends StatefulWidget {
+class AlumniCard extends ConsumerStatefulWidget {
   final String selectedDepartment;
   final int selectedYear;
   final bool? isVertical;
@@ -13,10 +15,10 @@ class AlumniCard extends StatefulWidget {
       this.isVertical});
 
   @override
-  State<AlumniCard> createState() => _AlumniCardState();
+  ConsumerState<AlumniCard> createState() => _AlumniCardState();
 }
 
-class _AlumniCardState extends State<AlumniCard> {
+class _AlumniCardState extends ConsumerState<AlumniCard> {
   int start = 200;
   int delay = 100;
 
@@ -58,88 +60,89 @@ class _AlumniCardState extends State<AlumniCard> {
                                     alumniDetails[index].branch &&
                                 widget.selectedYear == alumniDetails[index].year
                         ? FadeIn(
-                            child: Container(
-                              width: 170,
-                              height: 100,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 0, vertical: 5),
-                              padding: const EdgeInsets.only(left: 10),
-                              // decoration: BoxDecoration(
-                              //   color: Theme.of(context)
-                              //       .colorScheme
-                              //       .secondaryContainer,
-                              //   border: Border.all(
-                              //     color:
-                              //         Theme.of(context).colorScheme.outline,
-                              //   ),
-                              //   borderRadius: BorderRadius.circular(20),
-                              // ),
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 30,
-                                        backgroundImage: AssetImage(
-                                          alumniDetails[index].imgUrl,
-                                        ),
-                                      ),
-                                      Text(
-                                        alumniDetails[index].name,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: const TextStyle(
-                                          fontFamily: 'IBMPlexMono',
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Row(
+                            child: ref.watch(alumniDataProvider).when(
+                              data: (data) {
+                                return Container(
+                                  width: 170,
+                                  height: 100,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 5),
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Text(
-                                            alumniDetails[index].branch,
-                                            style: const TextStyle(
-                                              fontFamily: 'IBMPlexMono',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 5),
                                           CircleAvatar(
-                                            radius: 2,
-                                            backgroundColor: Theme.of(context)
-                                                .colorScheme
-                                                .outline,
+                                            radius: 30,
+                                            backgroundImage: AssetImage(
+                                              alumniDetails[index].imgUrl,
+                                            ),
                                           ),
-                                          const SizedBox(width: 5),
                                           Text(
-                                            alumniDetails[index]
-                                                .year
-                                                .toString(),
+                                            alumniDetails[index].name,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                             style: const TextStyle(
                                               fontFamily: 'IBMPlexMono',
-                                              fontSize: 14,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                alumniDetails[index].branch,
+                                                style: const TextStyle(
+                                                  fontFamily: 'IBMPlexMono',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              CircleAvatar(
+                                                radius: 2,
+                                                backgroundColor:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .outline,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                alumniDetails[index]
+                                                    .year
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                  fontFamily: 'IBMPlexMono',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
+                              error: (error, stackTrace) {
+                                return const SizedBox();
+                              },
+                              loading: () {
+                                return const SizedBox();
+                              },
                             ),
                           )
                         : const SizedBox();
