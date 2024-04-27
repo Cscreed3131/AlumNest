@@ -7,6 +7,7 @@ class AlumniDataModel {
   String alumniPositionInCompany;
   String alumniLinkedInId;
   String alumniEmail;
+  String alumniImageUrl;
 
   AlumniDataModel({
     required this.alumniName,
@@ -17,6 +18,6 @@ class AlumniDataModel {
     required this.alumniPositionInCompany,
     required this.alumniLinkedInId,
     required this.alumniEmail,
-    required graduationYear,
+    required this.alumniImageUrl,
   });
 }

@@ -1,4 +1,5 @@
 import 'package:alumnest/global_variables.dart';
+import 'package:alumnest/providers/alumni_data_provider.dart';
 import 'package:alumnest/providers/user_data_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
