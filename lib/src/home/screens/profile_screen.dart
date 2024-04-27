@@ -51,14 +51,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   @override
   void dispose() {
-    // nameController.dispose();
-    // sicController.dispose();
-    // branchController.dispose();
     batchController.dispose();
     companyNameController.dispose();
     positionInCompanyController.dispose();
     linkedInIdController.dispose();
-    // emailController.dispose();
     super.dispose();
   }
 
@@ -182,7 +178,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             },
                           ),
                         ),
-                        // const SizedBox(height: 10),
                         Card(
                           child: TextFormField(
                             controller: positionInCompanyController,
@@ -198,7 +193,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             },
                           ),
                         ),
-                        // const SizedBox(height: 10),
                         Card(
                           child: TextFormField(
                             controller: linkedInIdController,
@@ -213,7 +207,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             },
                           ),
                         ),
-                        // const SizedBox(height: 10),
                         Card(
                           child: TextFormField(
                             // controller: emailController,
@@ -230,8 +223,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             },
                           ),
                         ),
-                        // const SizedBox(height: 10),
-
                         const SizedBox(height: 10),
                         ElevatedButton(
                           onPressed: () {
