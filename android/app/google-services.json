@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "930461040442",
+    "project_id": "alumnest-d3326",
+    "storage_bucket": "alumnest-d3326.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930461040442:android:81123f3449f814b7525a03",
+        "android_client_info": {
+          "package_name": "com.example.alumnest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB77LG1iUizDJ3-_MKMTOVqfwlLJI9yHaY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
