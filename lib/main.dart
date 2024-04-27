@@ -42,29 +42,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return DynamicColorBuilder(
-    //   builder: (ColorScheme? lightDynamic, ColorScheme? dark) {
-    //     ColorScheme lightColorScheme;
-    //     ColorScheme darkColorScheme;
-
-    //     final brightness = MediaQuery.of(context).platformBrightness;
-
-    //     if (lightDynamic != null && dark != null) {
-    //       lightColorScheme = lightDynamic.harmonized()..copyWith();
-    //       lightColorScheme = lightColorScheme.copyWith(secondary: brandColor);
-    //       darkColorScheme = dark.copyWith(secondary: brandColor);
-    //     } else {
-    //       lightColorScheme = ColorScheme.fromSeed(
-    //           seedColor: brandColor, brightness: Brightness.light);
-    //       darkColorScheme = ColorScheme.fromSeed(
-    //           seedColor: brandColor, brightness: Brightness.dark);
-    //     }
-
-    //     final colorScheme =
-    //         brightness == Brightness.dark ? darkColorScheme : lightColorScheme;
-
-    //   },
-    // );
     return MaterialApp(
       title: 'AlumNest',
       debugShowCheckedModeBanner: false,

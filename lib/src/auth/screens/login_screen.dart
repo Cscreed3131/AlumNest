@@ -88,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     void navTOHomeScreen() {
-      Navigator.of(context).popAndPushNamed(
-        HomeScreen.routeName,
+      Navigator.of(context).pushReplacementNamed(
+        '/',
       );
     }
 
@@ -226,7 +226,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         child: ElevatedButton(
                                           onPressed: () async {
                                             if (await _submit()) {
-                                              navTOHomeScreen();
+                                              Navigator.of(context)
+                                                  .pushReplacementNamed(
+                                                      HomeScreen.routeName);
                                             }
                                           },
                                           style: ButtonStyle(
