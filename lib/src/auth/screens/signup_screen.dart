@@ -143,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderRadius: BorderRadius.circular(20),
                           image: const DecorationImage(
                             image: AssetImage(
-                              'assets/images/logo-no-background.png',
+                              'assets/images/AlumNest.png',
                             ),
                             fit: BoxFit.cover,
                           ),

@@ -1,6 +1,6 @@
-import 'package:alumnest/global_variables.dart';
 import 'package:alumnest/providers/alumni_data_provider.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,7 +30,7 @@ class _AlumniCardState extends ConsumerState<AlumniCard> {
       context: context,
       removeTop: true,
       child: Visibility(
-        visible: hasAlumnis(),
+        visible: hasAlumnis(context),
         replacement: const Center(
           heightFactor: 10,
           child: Text(
@@ -42,31 +42,34 @@ class _AlumniCardState extends ConsumerState<AlumniCard> {
             ),
           ),
         ),
-        child: SizedBox(
-          height: widget.isVertical == null
-              ? screenHeight * 0.22
-              : alumniDetails.length * 40.0,
-          child: widget.isVertical == null
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: alumniDetails.length,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return widget.selectedDepartment == 'All' &&
-                                widget.selectedYear ==
-                                    alumniDetails[index].year ||
-                            widget.selectedDepartment ==
-                                    alumniDetails[index].branch &&
-                                widget.selectedYear == alumniDetails[index].year
-                        ? FadeIn(
-                            child: ref.watch(alumniDataProvider).when(
-                              data: (data) {
-                                return Container(
+        child: ref.watch(alumniDataProvider).when(
+          data: (data) {
+            return SizedBox(
+              height: widget.isVertical == null
+                  ? screenHeight * 0.22
+                  : data.length * screenHeight / 5,
+              child: widget.isVertical == null
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: data.length,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return widget.selectedDepartment == 'All' &&
+                                    widget.selectedYear.toString() ==
+                                        data[index].alumniBatch ||
+                                widget.selectedDepartment ==
+                                        data[index].alumniBranch &&
+                                    widget.selectedYear.toString() ==
+                                        data[index].alumniBatch
+                            ? FadeIn(
+                                child: Container(
                                   width: 170,
                                   height: 100,
                                   margin: const EdgeInsets.symmetric(
-                                      horizontal: 0, vertical: 5),
+                                    horizontal: 0,
+                                    vertical: 5,
+                                  ),
                                   padding: const EdgeInsets.only(left: 10),
                                   child: Card(
                                     elevation: 5,
@@ -75,19 +78,21 @@ class _AlumniCardState extends ConsumerState<AlumniCard> {
                                     ),
                                     child: Container(
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 5),
+                                        horizontal: 5,
+                                      ),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           CircleAvatar(
                                             radius: 30,
-                                            backgroundImage: AssetImage(
-                                              alumniDetails[index].imgUrl,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                              data[index].alumniImageUrl,
                                             ),
                                           ),
                                           Text(
-                                            alumniDetails[index].name,
+                                            data[index].alumniName,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             style: const TextStyle(
@@ -103,7 +108,7 @@ class _AlumniCardState extends ConsumerState<AlumniCard> {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Text(
-                                                alumniDetails[index].branch,
+                                                data[index].alumniBranch,
                                                 style: const TextStyle(
                                                   fontFamily: 'IBMPlexMono',
                                                   fontSize: 14,
@@ -120,9 +125,7 @@ class _AlumniCardState extends ConsumerState<AlumniCard> {
                                               ),
                                               const SizedBox(width: 5),
                                               Text(
-                                                alumniDetails[index]
-                                                    .year
-                                                    .toString(),
+                                                data[index].alumniBatch,
                                                 style: const TextStyle(
                                                   fontFamily: 'IBMPlexMono',
                                                   fontSize: 14,
@@ -135,131 +138,148 @@ class _AlumniCardState extends ConsumerState<AlumniCard> {
                                       ),
                                     ),
                                   ),
-                                );
-                              },
-                              error: (error, stackTrace) {
-                                return const SizedBox();
-                              },
-                              loading: () {
-                                return const SizedBox();
-                              },
-                            ),
-                          )
-                        : const SizedBox();
-                  },
-                )
-              : ListView.builder(
-                  itemCount: alumniDetails.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return widget.selectedDepartment == 'All' &&
-                                widget.selectedYear ==
-                                    alumniDetails[index].year ||
-                            widget.selectedDepartment ==
-                                    alumniDetails[index].branch &&
-                                widget.selectedYear == alumniDetails[index].year
-                        ? FadeIn(
-                            child: Container(
-                              width: screenWidth * 0.9,
-                              height: 100,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 4, vertical: 5),
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Card(
-                                elevation: 5,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
                                 ),
+                              )
+                            : const SizedBox();
+                      },
+                    )
+                  : ListView.builder(
+                      itemCount: data.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return widget.selectedDepartment == 'All' &&
+                                    widget.selectedYear.toString() ==
+                                        data[index].alumniBatch ||
+                                widget.selectedDepartment ==
+                                        data[index].alumniBranch &&
+                                    widget.selectedYear.toString() ==
+                                        data[index].alumniBatch
+                            ? FadeIn(
                                 child: Container(
+                                  width: screenWidth * 0.9,
+                                  height: 100,
                                   margin: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 30,
-                                        backgroundImage: AssetImage(
-                                          alumniDetails[index].imgUrl,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              alumniDetails[index].name,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: const TextStyle(
-                                                fontFamily: 'IBMPlexMono',
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                      horizontal: 4, vertical: 5),
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: 30,
+                                            backgroundImage:
+                                                CachedNetworkImageProvider(
+                                              data[index].alumniImageUrl,
                                             ),
-                                            Row(
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  MainAxisAlignment.spaceEvenly,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  alumniDetails[index].branch,
+                                                  data[index].alumniName,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
                                                   style: const TextStyle(
                                                     fontFamily: 'IBMPlexMono',
-                                                    fontSize: 14,
+                                                    fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                const SizedBox(width: 5),
-                                                CircleAvatar(
-                                                  radius: 2,
-                                                  backgroundColor:
-                                                      Theme.of(context)
-                                                          .colorScheme
-                                                          .outline,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      data[index].alumniBranch,
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'IBMPlexMono',
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 5),
+                                                    CircleAvatar(
+                                                      radius: 2,
+                                                      backgroundColor:
+                                                          Theme.of(context)
+                                                              .colorScheme
+                                                              .outline,
+                                                    ),
+                                                    const SizedBox(width: 5),
+                                                    Text(
+                                                      data[index]
+                                                          .alumniBatch
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                        fontFamily:
+                                                            'IBMPlexMono',
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                const SizedBox(width: 5),
-                                                Text(
-                                                  alumniDetails[index]
-                                                      .year
-                                                      .toString(),
-                                                  style: const TextStyle(
-                                                    fontFamily: 'IBMPlexMono',
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ]),
-                                    ],
+                                              ]),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          )
-                        : const SizedBox();
-                  },
-                ),
+                              )
+                            : const SizedBox();
+                      },
+                    ),
+            );
+          },
+          error: (error, stackTrace) {
+            return const SizedBox();
+          },
+          loading: () {
+            return const SizedBox();
+          },
         ),
       ),
     );
   }
 
-  bool hasAlumnis() {
+  bool hasAlumnis(BuildContext context) {
     // Implement the logic to check if there are any alumnis based on the selectedDepartment and selectedYear.
-    for (var alumni in alumniDetails) {
-      if (widget.selectedDepartment == 'All' &&
-              widget.selectedYear == alumni.year ||
-          widget.selectedDepartment == alumni.branch &&
-              widget.selectedYear == alumni.year) {
+    return ref.watch(alumniDataProvider).when(
+      data: (data) {
+        for (var alumni in data) {
+          if (widget.selectedDepartment == 'All' &&
+                  widget.selectedYear.toString() == alumni.alumniBatch ||
+              widget.selectedDepartment == alumni.alumniBranch &&
+                  widget.selectedYear.toString() == alumni.alumniBatch) {
+            return true;
+          }
+        }
+        return false;
+      },
+      error: (error, stackTrace) {
+        return false;
+      },
+      loading: () {
         return true;
-      }
-    }
-    return false;
+      },
+    );
   }
 }

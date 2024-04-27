@@ -87,12 +87,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // void navTOHomeScreen() {
-    //   Navigator.of(context).pushReplacementNamed(
-    //     '/',
-    //   );
-    // }
-
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final shortestSide = MediaQuery.of(context).size.shortestSide < 600;
@@ -123,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(20),
                           image: const DecorationImage(
                             image: AssetImage(
-                              'assets/images/logo-no-background.png',
+                              'assets/images/AlumNest.png',
                             ),
                             fit: BoxFit.cover,
                           ),

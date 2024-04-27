@@ -232,6 +232,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               data.userImageUrl,
                               data.userPhoneNumber,
                             );
+                            Navigator.of(context).pop();
                           },
                           child: const Text('Submit'),
                         ),

@@ -19,7 +19,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   String selectedDepartment = 'All';
   int selectedYear = 2024;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +108,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                     AlumniCard(
                       selectedDepartment: data.userBranch,
-                      selectedYear: 2024,
+                      selectedYear: 2020,
                     ),
 
                     const SizedBox(
@@ -121,7 +120,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 8),
                       child: ListTile(
                         title: Text(
-                          "Most contacted Alumni",
+                          "Early Placers",
                           style: TextStyle(
                             fontFamily: 'IBMPlexMono',
                             fontSize: 20,
@@ -131,8 +130,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                     ),
 
-                    const AlumniCard(
-                        selectedDepartment: 'All', selectedYear: 2020),
+                    AlumniCard(
+                        selectedDepartment: 'All',
+                        selectedYear: DateTime.now().year),
 
                     const SizedBox(
                       height: 20,
